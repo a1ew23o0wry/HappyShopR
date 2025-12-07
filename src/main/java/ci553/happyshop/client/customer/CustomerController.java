@@ -23,6 +23,9 @@ public class CustomerController {
             case "OK & Close":
                 cusModel.closeReceipt();
                 break;
+            case "sort Trolley":
+                cusModel.sortTrolley();
+                break;
         }
     }
 

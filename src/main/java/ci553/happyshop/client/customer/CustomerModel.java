@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +71,23 @@ public class CustomerModel {
             //TODO
             // 1. Merges items with the same product ID (combining their quantities).
             // 2. Sorts the products in the trolley by product ID.
-            trolley.add(theProduct);
+
+            Product item = new Product(
+                    theProduct.getProductId(),
+                    theProduct.getProductDescription(),
+                    theProduct.getProductImageName(),
+                    theProduct.getUnitPrice(),
+                    theProduct.getStockQuantity()
+            );
+            item.setOrderedQuantity(1);
+
+            trolley.add(item);
+
+            //new
+            trolley = groupProductsById(trolley);
+
+            trolley.sort(Comparator.comparing((Product::getProductId)));
+
             displayTaTrolley = ProductListFormatter.buildString(trolley); //build a String for trolley so that we can show it
         }
         else{
@@ -79,6 +96,10 @@ public class CustomerModel {
         }
         displayTaReceipt=""; // Clear receipt to switch back to trolleyPage (receipt shows only when not empty)
         updateView();
+    }
+
+    void sortTrolley() {
+
     }
 
     void checkOut() throws IOException, SQLException {
@@ -144,9 +165,17 @@ public class CustomerModel {
                 Product existing = grouped.get(id);
                 existing.setOrderedQuantity(existing.getOrderedQuantity() + p.getOrderedQuantity());
             } else {
-                // Make a shallow copy to avoid modifying the original
-                grouped.put(id,new Product(p.getProductId(),p.getProductDescription(),
-                        p.getProductImageName(),p.getUnitPrice(),p.getStockQuantity()));
+                //revise - just to get it to work
+                // Copy product AND its current orderedQuantity
+                Product copy = new Product(
+                        p.getProductId(),
+                        p.getProductDescription(),
+                        p.getProductImageName(),
+                        p.getUnitPrice(),
+                        p.getStockQuantity()
+                );
+                copy.setOrderedQuantity(p.getOrderedQuantity());
+                grouped.put(id, copy);
             }
         }
         return new ArrayList<>(grouped.values());

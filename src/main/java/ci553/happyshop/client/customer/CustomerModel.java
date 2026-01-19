@@ -6,6 +6,8 @@ import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.orderManagement.OrderHub;
 import ci553.happyshop.utility.StorageLocation;
 import ci553.happyshop.utility.ProductListFormatter;
+import ci553.happyshop.catalogue.exception.underMinPaymentException;
+
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -21,7 +23,12 @@ import java.util.Map;
  * You can either directly modify the CustomerModel class to implement the required tasks,
  * or create a subclass of CustomerModel and override specific methods where appropriate.
  */
+
+//added
+
 public class CustomerModel {
+    //added
+    private RemoveProductNotifier remover = new RemoveProductNotifier();
     public CustomerView cusView;
     public DatabaseRW databaseRW; //Interface type, not specific implementation
                                   //Benefits: Flexibility: Easily change the database implementation.
@@ -93,6 +100,12 @@ public class CustomerModel {
         else{
             displayLaSearchResult = "Please search for an available product before adding it to the trolley";
             System.out.println("must search and get an available product before add to trolley");
+
+            //added
+            remover.cusView = cusView;
+
+            remover.showRemovalMsg("a");
+
         }
         displayTaReceipt=""; // Clear receipt to switch back to trolleyPage (receipt shows only when not empty)
         updateView();
@@ -101,8 +114,29 @@ public class CustomerModel {
     void sortTrolley() {
 
     }
+    private double calculateTotal(ArrayList<Product> trolley) {
+        for (Product p : trolley) {
+            System.out.println(
+                    "DEBUG trolley item: " + p.getProductId() +
+                            " price=" + p.getUnitPrice() +
+                            " orderedQty=" + p.getOrderedQuantity() +
+                            " stockQty=" + p.getStockQuantity()
+            );
+        }
+        double total = 0.0;
+        for (Product p : trolley) {
+            total += p.getUnitPrice() * p.getOrderedQuantity();
+        }
+        return total;
+    }
 
-    void checkOut() throws IOException, SQLException {
+    void checkOut() throws IOException, SQLException, underMinPaymentException{
+
+
+
+
+
+
         if(!trolley.isEmpty()){
             // Group the products in the trolley by productId to optimize stock checking
             // Check the database for sufficient stock for all products in the trolley.
@@ -110,7 +144,15 @@ public class CustomerModel {
             // If all products are sufficient, the database will be updated, and insufficientProducts will be empty.
             // Note: If the trolley is already organized (merged and sorted), grouping is unnecessary.
             ArrayList<Product> groupedTrolley= groupProductsById(trolley);
+            double total = calculateTotal(groupedTrolley);
+            if (total < 5.00) {
+                throw new underMinPaymentException(
+                        String.format("Minimum payment is £5.00 - Your total £%.2f.", total)
+                );
+            }
+
             ArrayList<Product> insufficientProducts= databaseRW.purchaseStocks(groupedTrolley);
+
 
             if(insufficientProducts.isEmpty()){ // If stock is sufficient for all products
                 //get OrderHub and tell it to make a new Order
@@ -125,6 +167,7 @@ public class CustomerModel {
                         ProductListFormatter.buildString(theOrder.getProductList())
                 );
                 System.out.println(displayTaReceipt);
+
             }
             else{ // Some products have insufficient stock — build an error message to inform the customer
                 StringBuilder errorMsg = new StringBuilder();
@@ -144,12 +187,20 @@ public class CustomerModel {
                 //remember close the message window where appropriate (using method closeNotifierWindow() of RemoveProductNotifier class)
                 displayLaSearchResult = "Checkout failed due to insufficient stock for the following products:\n" + errorMsg.toString();
                 System.out.println("stock is not enough");
+
+                //PRODUCT REMOVAL POPUP
+
+
             }
         }
         else{
             displayTaTrolley = "Your trolley is empty";
             System.out.println("Your trolley is empty");
         }
+
+
+
+
         updateView();
     }
 

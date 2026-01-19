@@ -2,9 +2,16 @@ package ci553.happyshop.client.customer;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import ci553.happyshop.catalogue.exception.underMinPaymentException;
+
+
 
 public class CustomerController {
+
     public CustomerModel cusModel;
+    public CustomerView cusView;
+
+
 
     public void doAction(String action) throws SQLException, IOException {
         switch (action) {
@@ -18,7 +25,14 @@ public class CustomerController {
                 cusModel.cancel();
                 break;
             case "Check Out":
-                cusModel.checkOut();
+                try {
+                    cusModel.checkOut();
+                } catch (underMinPaymentException e) {
+                    cusView.showCheckoutError(
+                            e.getMessage()
+                    );
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "OK & Close":
                 cusModel.closeReceipt();

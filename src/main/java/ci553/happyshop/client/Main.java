@@ -76,6 +76,7 @@ public class Main extends Application {
         DatabaseRW databaseRW = DatabaseRWFactory.createDatabaseRW();
 
         cusView.cusController = cusController;
+        cusController.cusView = cusView;
         cusController.cusModel = cusModel;
         cusModel.cusView = cusView;
         cusModel.databaseRW = databaseRW;

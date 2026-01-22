@@ -17,23 +17,25 @@ package ci553.happyshop.utility;
  * - Private constructor: prevents instantiation (this is a static-only utility class)
  * - Holds only static constants: ensures minimal memory usage and clean syntax
  *
- * Why a Record is NOT appropriate:
+ *  Why a Record is NOT appropriate:
  * - Records are intended for immutable instance data (e.g., DTOs), not static constants
  * - This class has no record components — everything is static
  * - We're using this as a utility container, not a data model
  *
- * Reminder:
- * Just because a class has no behaviour and only data does NOT mean it should be a record.
- * If all members are static constants, use a final utility class like this one.
+ *  Reminder:
+ *  Just because a class has no behavior and only data does NOT mean it should be a record.
+ *  If all members are static constants, use a final utility class like this one.
  */
 public final class UIStyle {
 
-    // Private constructor prevents instantiation
+public final class UIStyle {
+
+    //private constructor prevents instantiation
     private UIStyle() {
         throw new UnsupportedOperationException("UIStyle is a utility class");
     }
 
-    public static final int customerWinWidth = 600;
+    public static final int customerWinWidth = 610;
     public static final int customerWinHeight = 300;
     public static final int removeProNotifierWinWidth = customerWinWidth / 2 + 160;
     public static final int removeProNotifierWinHeight = 230;
@@ -62,6 +64,9 @@ public final class UIStyle {
             "-fx-text-fill: black; " +
             "-fx-background-color: lightblue;";
 
+    public static final String labelLowStockStyle =
+            "-fx-font-size: 12px; -fx-text-fill: red;";
+
     public static final String comboBoxStyle = "-fx-font-weight: bold; " +
             "-fx-font-size: 14px;";
 
@@ -82,10 +87,20 @@ public final class UIStyle {
     public static final String rootStyleYellow = "-fx-padding: 8px; " +
             "-fx-background-color: lightyellow";
 
+    public static final String rootVipCustomerStyle = "-fx-padding: 8px; " +
+            "-fx-background-color: burlywood";
+
+    public static final String spinnerArrowStyle = "-fx-font-size: 12px; -fx-padding: 0;";
+
     public static final String textFiledStyle = "-fx-font-size: 16";
+    public static final String smallTextFiledStyle = "-fx-font-size: 14";
+    public static final String tinyTextFiledStyle = "-fx-font-size: 12";
 
     public static final String labelMulLineStyle = "-fx-font-size: 16px; " +
             "-fx-background-color: lightpink";
+
+    public static final String labelPriceStyle = "-fx-font-size: 16px; " +
+            "-fx-background-color: lightyellow";
 
     public static final String listViewStyle = "-fx-border-color: #ccc; " +
             "-fx-border-width: 1px; -fx-background-color: white; -fx-font-size: 14px;";
@@ -105,12 +120,14 @@ public final class UIStyle {
     public static final String redFillBtnStyle = "-fx-background-color: red; " +
             "-fx-text-fill: white; -fx-font-size: 14px; ";
 
+    public static final String searchBtnStyle = "-fx-background-color: purple; " +
+            "-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;";
+
     public static final String grayFillBtnStyle = "-fx-background-color: gray; " +
             "-fx-text-fill: white; -fx-font-size: 14px; ";
 
     public static final String blueFillBtnStyle = "-fx-background-color: blue; " +
             "-fx-text-fill: white; -fx-font-size: 14px;";
-
     public static final String alertBtnStyle = "-fx-background-color: green; " +
             "-fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold;";
 
@@ -124,4 +141,7 @@ public final class UIStyle {
 
     public static final String alertContentUserActionStyle = "-fx-font-size: 14px;" +
             "-fx-font-weight: normal; -fx-text-fill: green;";
+
+    public static final String tooltipStyle = "-fx-background-color: lightyellow; -fx-text-fill: red;";
+
 }

@@ -26,6 +26,7 @@ package ci553.happyshop.utility;
  *  Just because a class has no behavior and only data does NOT mean it should be a record.
  *  If all members are static constants, use a final utility class like this one.
  */
+public final class UIStyle {
 
 public final class UIStyle {
 
@@ -132,7 +133,8 @@ public final class UIStyle {
 
     public static final String alertTitleLabelStyle = "-fx-font-size: 16px; " +
             "-fx-font-weight: bold; " +
-            "-fx-text-fill: red; " + "-fx-background-color: lightblue;";
+            "-fx-text-fill: red; " +
+            "-fx-background-color: lightblue;";
 
     public static final String alertContentTextAreaStyle = "-fx-font-size: 14px;" +
             "-fx-font-weight: normal;-fx-control-inner-background: lightyellow; -fx-text-fill: darkblue;";

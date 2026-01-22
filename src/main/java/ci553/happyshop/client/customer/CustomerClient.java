@@ -35,7 +35,10 @@ public class CustomerClient extends Application {
         cusController.cusModel = cusModel;
         cusModel.cusView = cusView;
         cusModel.databaseRW = databaseRW;
+        cusController.cusView = cusView;
         cusView.start(window);
+        //remove temp debug
+        System.out.println("Controller view = " + cusController.cusView);
 
         //RemoveProductNotifier removeProductNotifier = new RemoveProductNotifier();
         //removeProductNotifier.cusView = cusView;

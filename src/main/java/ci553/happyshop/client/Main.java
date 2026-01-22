@@ -12,6 +12,7 @@ import ci553.happyshop.client.warehouse.*;
 import ci553.happyshop.orderManagement.OrderHub;
 import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.storageAccess.DatabaseRWFactory;
+import ci553.happyshop.utility.sound.JavaFxSoundPlayer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -73,9 +74,14 @@ public class Main extends Application {
         CustomerView cusView = new CustomerView();
         CustomerController cusController = new CustomerController();
         CustomerModel cusModel = new CustomerModel();
+        CustomerActions actions = new CusModAdapter(cusModel);
+
         DatabaseRW databaseRW = DatabaseRWFactory.createDatabaseRW();
 
         cusView.cusController = cusController;
+        cusController.cusView = cusView;
+        cusController.setSoundPlayer(new JavaFxSoundPlayer(true, 0.50));
+
         cusController.cusModel = cusModel;
         cusModel.cusView = cusView;
         cusModel.databaseRW = databaseRW;

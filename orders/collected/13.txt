@@ -1,0 +1,14 @@
+Order ID: 13 
+State: Collected
+OrderedDateTime: 2025-11-18 17:50:26 
+ProgressingDateTime: 2025-12-07 19:48:47
+CollectedDateTime: 2025-12-07 19:48:54
+Items:
+ 0002    DAB Radio          ( 6) £ 179.94
+ 0003    Toaster            ( 7) £ 139.93
+ 0004    Watch              ( 3) £  89.97
+ 0005    Digital Camera     ( 4) £ 359.96
+ 0006    MP3 player         ( 3) £  23.97
+--------------------------------------------
+ Total                               £ 793.77
+

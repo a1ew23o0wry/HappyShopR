@@ -14,7 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-
+import javafx.scene.control.Alert;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,7 +26,8 @@ import java.sql.SQLException;
  *    depending on the current context. Only one of these is shown at a time.
  */
 
-public class CustomerView  {
+public class CustomerView implements CustomerViewPort {
+    private RemoveProductNotifier notifier = new RemoveProductNotifier();
     public CustomerController cusController;
 
     private final int WIDTH = UIStyle.customerWinWidth;
@@ -73,6 +74,7 @@ public class CustomerView  {
         WinPosManager.registerWindow(window,WIDTH,HEIGHT); //calculate position x and y for this window
         window.show();
         viewWindow=window;// Sets viewWindow to this window for future reference and management.
+        notifier.cusView = this;
     }
 
     private VBox createSearchPage() {
@@ -214,5 +216,17 @@ public class CustomerView  {
     WindowBounds getWindowBounds() {
         return new WindowBounds(viewWindow.getX(), viewWindow.getY(),
                   viewWindow.getWidth(), viewWindow.getHeight());
+    }
+
+    public void showWarning(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void showCheckoutError(String message) {
+        showWarning("Checkout blocked", message);
     }
 }

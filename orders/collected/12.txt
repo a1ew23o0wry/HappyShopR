@@ -1,0 +1,11 @@
+Order ID: 12 
+State: Collected
+OrderedDateTime: 2025-11-18 17:49:28 
+ProgressingDateTime: 2025-11-18 18:16:36
+CollectedDateTime: 2025-11-18 18:16:37
+Items:
+ 0001    40 inch TV         ( 3) £ 807.00
+ 0002    DAB Radio          ( 6) £ 179.94
+--------------------------------------------
+ Total                               £ 986.94
+

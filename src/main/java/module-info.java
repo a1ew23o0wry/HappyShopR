@@ -20,4 +20,7 @@ module ci553.happyshop {
     exports ci553.happyshop.client.emergency;
     exports ci553.happyshop.systemSetup;
 
+    requires javafx.media;
+
+
 }

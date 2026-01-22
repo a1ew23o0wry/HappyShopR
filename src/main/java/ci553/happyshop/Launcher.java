@@ -13,6 +13,7 @@ import javafx.application.Application;
  */
 
 public class Launcher  {
+
     /**
      * The main method to start the full system.
      * It launches the Main JavaFX application.
